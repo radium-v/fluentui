@@ -25,8 +25,10 @@ const Person20Regular = html<StoryArgs<FluentTextInput>>`
 `;
 
 const storyTemplate = html<StoryArgs<FluentTextInput>>`
-  <div style="display: flex; flex-direction: column;">
+  <label style="display: flex; flex-direction: column;" for="text-input">
+    <fluent-label>Sample Input</fluent-label>
     <fluent-text-input
+      id="text-input"
       appearance="${x => x.appearance}"
       autocomplete="${x => x.autocomplete}"
       ?autofocus="${x => x.autofocus}"
@@ -44,13 +46,11 @@ const storyTemplate = html<StoryArgs<FluentTextInput>>`
       ?readonly="${x => x.readonly}"
       ?required="${x => x.required}"
       size="${x => x.size}"
-      spellcheck="${x => x.spellcheck}"
       type="${x => x.type}"
       value="${x => x.value}"
     >
-      <fluent-label>Sample Input</fluent-label>
     </fluent-text-input>
-  </div>
+  </label>
 `;
 
 export default {
@@ -144,16 +144,13 @@ export const ContentStartAfter: Story<FluentTextInput> = renderComponent(html<St
   <div style="display: flex; flex-direction: column; gap: 30px;">
     <fluent-text-input>
       <span slot="start">${Person20Regular}</span>
-      <fluent-label>Content Start</fluent-label>
     </fluent-text-input>
     <fluent-text-input>
       <span slot="end">${Person20Regular}</span>
-      <fluent-label>Content After</fluent-label>
     </fluent-text-input>
     <fluent-text-input>
       <fluent-text slot="start" size="400"><span>$</span></fluent-text>
       <fluent-text slot="end" size="400"><span>.00</span></fluent-text>
-      <fluent-label>Content Before + After</fluent-label>
     </fluent-text-input>
   </div>
 `);
@@ -161,7 +158,6 @@ export const ContentStartAfter: Story<FluentTextInput> = renderComponent(html<St
 export const Placeholder: Story<FluentTextInput> = renderComponent(html<StoryArgs<FluentTextInput>>`
   <fluent-text-input placeholder="This is a placeholder">
     <span slot="end">${Person20Regular}</span>
-    <fluent-label>Input with a placeholder</fluent-label>
   </fluent-text-input>
 `);
 
@@ -247,7 +243,10 @@ export const Disabled: Story<FluentTextInput> = renderComponent(html<StoryArgs<F
 
 export const Required: Story<FluentTextInput> = renderComponent(html<StoryArgs<FluentTextInput>>`
   <form id="form" action="#">
-    <fluent-text-input name="required-input" required>
+    <label for="required-input">
+      <fluent-label>Required Input</fluent-label>
+    </label>
+    <fluent-text-input id="required-input" name="required-input" required pattern="value">
       <span slot="end">${Person20Regular}</span>
       <fluent-label>Required Input</fluent-label>
     </fluent-text-input>

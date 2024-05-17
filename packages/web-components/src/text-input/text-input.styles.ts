@@ -43,7 +43,6 @@ import {
   spacingHorizontalSNudge,
   spacingHorizontalXS,
   spacingHorizontalXXS,
-  spacingVerticalXS,
   strokeWidthThin,
 } from '../theme/design-tokens.js';
 import { display } from '../utils/display.js';
@@ -62,21 +61,6 @@ export const styles: ElementStyles = css`
     font-weight: ${fontWeightRegular};
     line-height: ${lineHeightBase300};
     max-width: 400px;
-  }
-  .label {
-    display: flex;
-    color: ${colorNeutralForeground1};
-    padding-bottom: ${spacingVerticalXS};
-    flex-shrink: 0;
-    padding-inline-end: ${spacingHorizontalXS};
-  }
-
-  .label[hidden],
-  :host(:empty) .label {
-    display: none;
-  }
-
-  .root {
     position: relative;
     box-sizing: border-box;
     height: 32px;
@@ -89,14 +73,18 @@ export const styles: ElementStyles = css`
     border-bottom-color: ${colorNeutralStrokeAccessible};
     border-radius: ${borderRadiusMedium};
     gap: ${spacingHorizontalXXS};
+    vertical-align: middle;
+    cursor: text;
   }
-  .root::after {
+
+  .control::after {
     box-sizing: border-box;
     content: '';
     position: absolute;
     left: -1px;
     bottom: 0px;
     right: -1px;
+    width: calc(100% + 2px);
     height: max(2px, ${borderRadiusMedium});
     border-radius: 0 0 ${borderRadiusMedium} ${borderRadiusMedium};
     border-bottom: 2px solid ${colorCompoundBrandStroke};
@@ -106,9 +94,9 @@ export const styles: ElementStyles = css`
     transition-duration: ${durationUltraFast};
     transition-delay: ${curveAccelerateMid};
   }
+
   .control {
     width: 100%;
-    height: 100%;
     box-sizing: border-box;
     color: ${colorNeutralForeground1};
     border-radius: ${borderRadiusMedium};
@@ -116,17 +104,33 @@ export const styles: ElementStyles = css`
     font-family: ${fontFamilyBase};
     font-weight: ${fontWeightRegular};
     font-size: ${fontSizeBase300};
+    line-height: ${lineHeightBase300};
     border: none;
     background: transparent;
-    vertical-align: center;
+    flex: 1 1 auto;
+    white-space: nowrap;
+    overflow: auto;
+    scrollbar-width: none;
   }
+
   .control:focus-visible {
-    outline: 0;
-    border: 0;
+    outline: none;
+    /* border: 0; */
   }
-  .control::placeholder {
+
+  .placeholder {
     color: ${colorNeutralForeground4};
+    flex: 1 0 auto;
+    user-select: none;
+    pointer-events: none;
+    display: none;
+    position: absolute;
   }
+
+  .control:empty + .placeholder {
+    display: block;
+  }
+
   :host ::slotted([slot='start']),
   :host ::slotted([slot='end']) {
     display: flex;
@@ -142,37 +146,37 @@ export const styles: ElementStyles = css`
     padding-left: ${spacingHorizontalXXS};
     gap: ${spacingHorizontalXS};
   }
-  :host(:hover) .root {
+  :host(:hover) {
     border-color: ${colorNeutralStroke1Hover};
     border-bottom-color: ${colorNeutralStrokeAccessibleHover};
   }
-  :host(:active) .root {
+  :host(:active) {
     border-color: ${colorNeutralStroke1Pressed};
   }
-  :host(:focus-within) .root {
-    outline: transparent solid 2px;
-    border-bottom: 0;
+  :host(:focus-within) {
+    /* outline: transparent solid 2px; */
+    border-bottom-color: transparent;
   }
-  :host(:focus-within) .root::after {
+  :host(:focus-within) .control::after {
     transform: scaleX(1);
     transition-property: transform;
     transition-duration: ${durationNormal};
     transition-delay: ${curveDecelerateMid};
   }
-  :host(:focus-within:active) .root:after {
+  :host(:focus-within:active) .control::after {
     border-bottom-color: ${colorCompoundBrandStrokePressed};
   }
-  :host([appearance='outline']:focus-within) .root {
+  :host([appearance='outline']:focus-within) {
     border: ${strokeWidthThin} solid ${colorNeutralStroke1};
   }
   :host(:focus-within) .control {
     color: ${colorNeutralForeground1};
   }
-  :host([disabled]) .root {
+  :host([disabled]) {
     background: ${colorTransparentBackground};
     border: ${strokeWidthThin} solid ${colorNeutralStrokeDisabled};
   }
-  :host([disabled]) .control::placeholder,
+  :host([disabled]) .placeholder,
   :host([disabled]) ::slotted([slot='start']),
   :host([disabled]) ::slotted([slot='end']) {
     color: ${colorNeutralForegroundDisabled};
@@ -186,7 +190,7 @@ export const styles: ElementStyles = css`
     font-weight: ${fontWeightRegular};
     line-height: ${lineHeightBase200};
   }
-  :host([control-size='small']) .root {
+  :host([control-size='small']) {
     height: 24px;
     gap: ${spacingHorizontalXXS};
     padding: 0 ${spacingHorizontalSNudge};
@@ -200,7 +204,7 @@ export const styles: ElementStyles = css`
     font-weight: ${fontWeightRegular};
     line-height: ${lineHeightBase400};
   }
-  :host([control-size='large']) .root {
+  :host([control-size='large']) {
     height: 40px;
     gap: ${spacingHorizontalS};
     padding: 0 ${spacingHorizontalM};
@@ -209,43 +213,46 @@ export const styles: ElementStyles = css`
   :host([control-size='large']) ::slotted([slot='end']) {
     font-size: ${fontSizeBase600};
   }
-  :host([appearance='underline']) .root {
+  :host([appearance='underline']) {
     background: ${colorTransparentBackground};
     border: 0;
     border-radius: 0;
     border-bottom: ${strokeWidthThin} solid ${colorNeutralStrokeAccessible};
   }
-  :host([appearance='underline']:hover) .root {
+  :host([appearance='underline']:hover) {
     border-bottom-color: ${colorNeutralStrokeAccessibleHover};
   }
-  :host([appearance='underline']:active) .root {
+  :host([appearance='underline']:active) {
     border-bottom-color: ${colorNeutralStrokeAccessiblePressed};
   }
-  :host([appearance='underline']:focus-within) .root {
+  :host([appearance='underline']:focus-within) {
     border: 0;
     border-bottom-color: ${colorNeutralStrokeAccessiblePressed};
   }
-  :host([appearance='underline'][disabled]) .root {
+  :host([appearance='underline'][disabled]) {
     border-bottom-color: ${colorNeutralStrokeDisabled};
   }
-  :host([appearance='filled-lighter']) .root,
-  :host([appearance='filled-darker']) .root {
+  :host([appearance='filled-lighter']),
+  :host([appearance='filled-darker']) {
     border: ${strokeWidthThin} solid ${colorTransparentStroke};
     box-shadow: ${shadow2};
   }
-  :host([appearance='filled-lighter']) .root {
+  :host([appearance='filled-lighter']) {
     background: ${colorNeutralBackground1};
   }
-  :host([appearance='filled-darker']) .root {
+  :host([appearance='filled-darker']) {
     background: ${colorNeutralBackground3};
   }
-  :host([appearance='filled-lighter']:hover) .root,
-  :host([appearance='filled-darker']:hover) .root {
+  :host([appearance='filled-lighter']:hover),
+  :host([appearance='filled-darker']:hover) {
     border-color: ${colorTransparentStrokeInteractive};
   }
-  :host([appearance='filled-lighter']:active) .root,
-  :host([appearance='filled-darker']:active) .root {
+  :host([appearance='filled-lighter']:active),
+  :host([appearance='filled-darker']:active) {
     border-color: ${colorTransparentStrokeInteractive};
     background: ${colorNeutralBackground3};
+  }
+  :host([type='password']) .control {
+    -webkit-text-security: disc;
   }
 `;

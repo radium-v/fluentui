@@ -1,7 +1,5 @@
-import type { ElementViewTemplate } from '@microsoft/fast-element';
-import { html, ref, slotted } from '@microsoft/fast-element';
+import { ElementViewTemplate, html, ref } from '@microsoft/fast-element';
 import { endSlotTemplate, startSlotTemplate } from '../patterns/index.js';
-import { whitespaceFilter } from '../utils/index.js';
 import type { TextInput } from './text-input.js';
 import type { TextInputOptions } from './text-input.options.js';
 
@@ -12,42 +10,21 @@ import type { TextInputOptions } from './text-input.options.js';
  */
 export function textInputTemplate<T extends TextInput>(options: TextInputOptions = {}): ElementViewTemplate<T> {
   return html<T>`
-    <label part="label" for="control" class="label" ${ref('controlLabel')}>
-      <slot
-        ${slotted({
-          property: 'defaultSlottedNodes',
-          filter: whitespaceFilter,
-        })}
-      ></slot>
-    </label>
-    <div class="root" part="root">
-      ${startSlotTemplate(options)}
-      <input
-        class="control"
-        part="control"
-        id="control"
-        @change="${(x, c) => x.changeHandler(c.event as InputEvent)}"
-        @input="${(x, c) => x.inputHandler(c.event as InputEvent)}"
-        ?autofocus="${x => x.autofocus}"
-        autocomplete="${x => x.autocomplete}"
-        ?disabled="${x => x.disabled}"
-        list="${x => x.list}"
-        maxlength="${x => x.maxlength}"
-        minlength="${x => x.minlength}"
-        ?multiple="${x => x.multiple}"
-        name="${x => x.name}"
-        pattern="${x => x.pattern}"
-        placeholder="${x => x.placeholder}"
-        ?readonly="${x => x.readonly}"
-        ?required="${x => x.required}"
-        size="${x => x.size}"
-        spellcheck="${x => x.spellcheck}"
-        type="${x => x.type}"
-        value="${x => x.initialValue}"
-        ${ref('control')}
-      />
-      ${endSlotTemplate(options)}
-    </div>
+    ${startSlotTemplate(options)}
+    <span
+      contenteditable="${x => (x.disabled || x.readonly ? 'false' : 'true')}"
+      role="presentation"
+      class="control"
+      part="control"
+      @beforeinput="${(x, c) => x.beforeInputHandler(c.event as InputEvent)}"
+      @change="${(x, c) => x.changeHandler(c.event as InputEvent)}"
+      @input="${(x, c) => x.inputHandler(c.event as InputEvent)}"
+      @keypress="${(x, c) => x.keypressHandler(c.event as KeyboardEvent)}"
+      @paste="${(x, c) => x.pasteHandler(c.event as ClipboardEvent)}"
+      ${ref('control')}
+    ></span>
+    <span class="placeholder" part="placeholder" aria-hidden="true">${x => x.placeholder}</span>
+    ${endSlotTemplate(options)}
   `;
 }
 

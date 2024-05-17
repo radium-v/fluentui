@@ -20,114 +20,30 @@ test.describe('TextInput', () => {
     await expect(element).toBeFocused();
   });
 
-  test('should set the `disabled` attribute on the internal control', async ({ page }) => {
+  test('should set the `contenteditable` attribute to `false` on the internal control when the `disabled` attribute is present', async ({
+    page,
+  }) => {
     const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
+    const control = element.locator('.control');
 
     await page.setContent(/* html */ `
       <fluent-text-input disabled></fluent-text-input>
     `);
 
-    await expect(control).toBeDisabled();
+    await expect(control).toHaveAttribute('contenteditable', 'false');
   });
 
-  test('should set the `readonly` attribute on the internal control', async ({ page }) => {
+  test('should set the `contenteditable` attribute to `false` on the internal control when the `readonly` attribute is present', async ({
+    page,
+  }) => {
     const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
+    const control = element.locator('.control');
 
     await page.setContent(/* html */ `
       <fluent-text-input readonly></fluent-text-input>
     `);
 
-    await expect(control).toHaveAttribute('readonly');
-  });
-
-  test('should set the `required` attribute on the internal control', async ({ page }) => {
-    const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
-
-    await page.setContent(/* html */ `
-      <fluent-text-input required></fluent-text-input>
-    `);
-
-    await expect(control).toHaveAttribute('required');
-  });
-
-  test('should set the `spellcheck` attribute on the internal control', async ({ page }) => {
-    const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
-
-    await page.setContent(/* html */ `
-      <fluent-text-input spellcheck="true"></fluent-text-input>
-    `);
-
-    await expect(control).toHaveAttribute('spellcheck', 'true');
-  });
-
-  test('should set the `maxlength` attribute on the internal control', async ({ page }) => {
-    const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
-
-    await page.setContent(/* html */ `
-      <fluent-text-input maxlength="14"></fluent-text-input>
-    `);
-
-    await expect(control).toHaveAttribute('maxlength', '14');
-  });
-
-  test('should set the `minlength` attribute on the internal control', async ({ page }) => {
-    const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
-
-    await page.setContent(/* html */ `
-      <fluent-text-input minlength="14"></fluent-text-input>
-    `);
-
-    await expect(control).toHaveAttribute('minlength', '14');
-  });
-
-  test('should set the `name` attribute on the internal control', async ({ page }) => {
-    const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
-
-    await page.setContent(/* html */ `
-      <fluent-text-input name="foo"></fluent-text-input>
-    `);
-
-    await expect(control).toHaveAttribute('name', 'foo');
-  });
-
-  test('should set the `placeholder` attribute on the internal control', async ({ page }) => {
-    const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
-
-    await page.setContent(/* html */ `
-      <fluent-text-input placeholder="foo"></fluent-text-input>
-    `);
-
-    await expect(control).toHaveAttribute('placeholder', 'foo');
-  });
-
-  test('should set the `size` attribute on the internal control', async ({ page }) => {
-    const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
-
-    await page.setContent(/* html */ `
-      <fluent-text-input size="4"></fluent-text-input>
-    `);
-
-    await expect(control).toHaveAttribute('size', '4');
-  });
-
-  test('should set the `list` attribute on the internal control', async ({ page }) => {
-    const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
-
-    await page.setContent(/* html */ `
-      <fluent-text-input list="listId"></fluent-text-input>
-    `);
-
-    await expect(control).toHaveAttribute('list', 'listId');
+    await expect(control).toHaveAttribute('contenteditable', 'false');
   });
 
   test('should reflect `control-size` attribute values', async ({ page }) => {
@@ -247,7 +163,7 @@ test.describe('TextInput', () => {
     page,
   }) => {
     const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
+    const control = element.locator('.control');
 
     await page.setContent(/* html */ `
       <fluent-text-input></fluent-text-input>
@@ -261,7 +177,7 @@ test.describe('TextInput', () => {
 
     await expect(element).toHaveJSProperty('value', 'bar');
 
-    await expect(control).toHaveValue('bar');
+    await expect(element).toHaveAttribute('value', 'foo');
   });
 
   test('should hide the label when no default slotted content is provided', async ({ page }) => {
@@ -506,18 +422,14 @@ test.describe('TextInput', () => {
 
   test('should not accept user input when the `disabled` attribute is present', async ({ page }) => {
     const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
 
     await page.setContent(/* html */ `
       <fluent-text-input disabled></fluent-text-input>
     `);
 
-    await control.fill('foo', {
-      // eslint-disable-next-line playwright/no-force-option
-      force: true,
-    });
+    await element.pressSequentially('foo');
 
-    await expect(control).toHaveValue('');
+    await expect(element).toHaveJSProperty('value', '');
   });
 
   test('should set the `willValidate` property to `false` when the `disabled` attribute is present', async ({
@@ -594,7 +506,6 @@ test.describe('TextInput', () => {
 
   test('should submit the form via implicit submission when the form has no other controls', async ({ page }) => {
     const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
 
     await page.setContent(/* html */ `
       <form id="form" action="foo">
@@ -603,7 +514,7 @@ test.describe('TextInput', () => {
     `);
 
     // Playwright won't fill custom elements
-    await control.fill('hello');
+    await element.pressSequentially('hello');
 
     await element.press('Enter');
 
@@ -612,7 +523,6 @@ test.describe('TextInput', () => {
 
   test('should submit the form via implicit submission when the form contains a submit button', async ({ page }) => {
     const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
 
     await page.setContent(/* html */ `
       <form id="form" action="foo">
@@ -621,7 +531,7 @@ test.describe('TextInput', () => {
       </form>
     `);
 
-    await control.fill('hello');
+    await element.pressSequentially('hello');
 
     await element.press('Enter');
 
@@ -632,7 +542,6 @@ test.describe('TextInput', () => {
     page,
   }) => {
     const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
 
     await page.setContent(/* html */ `
       <form id="form" action="foo">
@@ -642,7 +551,7 @@ test.describe('TextInput', () => {
     `);
 
     // Playwright won't fill custom elements
-    await control.fill('hello');
+    await element.pressSequentially('hello');
 
     await element.press('Enter');
 
@@ -653,7 +562,6 @@ test.describe('TextInput', () => {
     for (const type of ImplicitSubmissionBlockingTypes) {
       test(`Blocking type: ${type}`, async ({ page }) => {
         const element = page.locator('fluent-text-input');
-        const control = element.locator('input');
 
         await page.setContent(/* html */ `
             <form id="form" action="foo">
@@ -662,7 +570,7 @@ test.describe('TextInput', () => {
             </form>
           `);
 
-        await control.fill('hello');
+        await element.pressSequentially('hello');
 
         await element.press('Enter');
 
@@ -689,7 +597,6 @@ test.describe('TextInput', () => {
 
   test('should NOT prevent form submission when the `readonly` attribute is set', async ({ page }) => {
     const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
 
     await page.setContent(/* html */ `
       <form action="foo">
@@ -697,7 +604,7 @@ test.describe('TextInput', () => {
       </form>
     `);
 
-    await control.press('Enter');
+    await element.press('Enter');
 
     expect(page.url()).toMatch(/foo/);
   });
@@ -706,7 +613,6 @@ test.describe('TextInput', () => {
     page,
   }) => {
     const element = page.locator('fluent-text-input');
-    const control = element.locator('input');
 
     await page.setContent(/* html */ `
       <form action="foo">
@@ -714,10 +620,10 @@ test.describe('TextInput', () => {
       </form>
     `);
 
-    await control.fill('hello@example.com, world@example.com');
+    await element.pressSequentially('hello@example.com, world@example.com');
 
     await element.press('Enter');
 
-    expect(page.url()).toMatch(/foo\?testinput=hello%40example\.com%2Cworld%40example\.com/);
+    expect(page.url()).toMatch(/foo\?testinput=hello%40example\.com%2Cworld%40example\.com$/);
   });
 });

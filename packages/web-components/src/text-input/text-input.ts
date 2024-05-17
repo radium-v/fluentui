@@ -1,4 +1,4 @@
-import { attr, FASTElement, nullableNumberConverter, Observable, observable } from '@microsoft/fast-element';
+import { attr, FASTElement, nullableNumberConverter, Observable, observable, Updates } from '@microsoft/fast-element';
 import { keyEnter } from '@microsoft/fast-web-utilities';
 import { StartEnd } from '../patterns/start-end.js';
 import { applyMixins } from '../utils/apply-mixins.js';
@@ -61,25 +61,6 @@ export class TextInput extends FASTElement {
    */
   @attr({ attribute: 'control-size' })
   public controlSize?: TextInputControlSize;
-
-  /**
-   * The default slotted content. This is the content that appears in the text field label.
-   *
-   * @internal
-   */
-  @observable
-  public defaultSlottedNodes!: Node[];
-
-  /**
-   * Updates the control label visibility based on the presence of default slotted content.
-   *
-   * @internal
-   */
-  public defaultSlottedNodesChanged(prev: Node[] | undefined, next: Node[] | undefined): void {
-    if (this.$fastController.isConnected) {
-      this.controlLabel.hidden = !next?.length;
-    }
-  }
 
   /**
    * Sets the directionality of the element to be submitted with form data.
@@ -210,6 +191,9 @@ export class TextInput extends FASTElement {
   @attr
   public placeholder!: string;
 
+  @observable
+  public placeholderElement!: HTMLSpanElement;
+
   /**
    * When true, the control will be immutable by user interaction.
    * @see The {@link https://developer.mozilla.org/docs/Web/HTML/Attributes/readonly | `readonly`} attribute
@@ -253,6 +237,8 @@ export class TextInput extends FASTElement {
   public requiredChanged(previous: boolean, next: boolean): void {
     if (this.$fastController.isConnected) {
       this.elementInternals.ariaRequired = `${!!next}`;
+
+      this.setValidity();
     }
   }
 
@@ -265,22 +251,6 @@ export class TextInput extends FASTElement {
    */
   @attr({ converter: nullableNumberConverter })
   public size!: number;
-
-  /**
-   * Controls whether or not to enable spell checking for the input field, or if the default spell checking configuration should be used.
-   * @see The {@link https://developer.mozilla.org/docs/Web/HTML/Global_attributes/spellcheck | `spellcheck`} attribute
-   *
-   * @public
-   * @remarks
-   * HTML Attribute: `spellcheck`
-   */
-  @attr({
-    converter: {
-      fromView: value => (typeof value === 'string' ? ['true', ''].includes(value.trim().toLowerCase()) : null),
-      toView: value => value.toString(),
-    },
-  })
-  public spellcheck!: boolean;
 
   /**
    * Allows setting a type or mode of text.
@@ -300,19 +270,12 @@ export class TextInput extends FASTElement {
   private _value: string = this.initialValue;
 
   /**
-   * A reference to the internal input element.
-   *
-   * @internal
-   */
-  public control!: HTMLInputElement;
-
-  /**
-   * A reference to the internal label element.
+   * A reference to the internal editable control.
    *
    * @internal
    */
   @observable
-  public controlLabel!: HTMLLabelElement;
+  public control!: HTMLSpanElement;
 
   /**
    * Indicates that the value has been changed by the user.
@@ -335,6 +298,12 @@ export class TextInput extends FASTElement {
    * @public
    */
   static readonly formAssociated = true;
+
+  /**
+   * An input element used for validation.
+   * @internal
+   */
+  private internalInput!: HTMLInputElement;
 
   /**
    * The element's validity state.
@@ -371,9 +340,11 @@ export class TextInput extends FASTElement {
     this._value = value;
 
     if (this.$fastController.isConnected) {
-      this.control.value = value;
       this.setFormValue(value);
       this.setValidity();
+      if (this.control.textContent !== value) {
+        this.control.textContent = value;
+      }
       Observable.notify(this, 'value');
     }
   }
@@ -400,6 +371,18 @@ export class TextInput extends FASTElement {
     return this.elementInternals.form;
   }
 
+  public beforeInputHandler(e: InputEvent): boolean | void {
+    switch (e.inputType) {
+      case 'insertLineBreak':
+      case 'insertParagraph': {
+        e.preventDefault();
+        break;
+      }
+    }
+
+    return true;
+  }
+
   /**
    * Change event handler for inner control.
    *
@@ -422,22 +405,45 @@ export class TextInput extends FASTElement {
   public connectedCallback(): void {
     super.connectedCallback();
 
-    this.addEventListener('keypress', this.keypressHandler);
+    this.addEventListener('focus', this.focusHandler);
+    this.addEventListener('focusout', this.focusoutHandler);
+
+    // fix label focusing
+    this.elementInternals.labels?.forEach(label => {
+      label.addEventListener('click', () => {
+        this.focus();
+      });
+    });
 
     this.setFormValue(this.value);
     this.setValidity();
   }
 
-  constructor() {
-    super();
-
-    this.elementInternals.role = 'textbox';
+  public disconnectedCallback(): void {
+    this.removeEventListener('focus', this.focusHandler);
+    this.removeEventListener('focusout', this.focusoutHandler);
+    super.disconnectedCallback();
   }
 
-  public disconnectedCallback(): void {
-    this.removeEventListener('keypress', this.keypressHandler);
+  /**
+   * Focuses the control and hides the placeholder.
+   *
+   * @internal
+   */
+  public focusHandler(): void {
+    this.placeholderElement?.toggleAttribute('hidden', true);
+    this.select();
+    this.control.focus();
+  }
 
-    super.disconnectedCallback();
+  /**
+   * Unselects any selected text when the control loses focus.
+   *
+   * @internal
+   */
+  public focusoutHandler(): void {
+    // this.setValidity();
+    this.select(false);
   }
 
   /**
@@ -456,6 +462,8 @@ export class TextInput extends FASTElement {
    * @internal
    */
   private implicitSubmit(): void {
+    this.internalInput?.remove();
+
     if (!this.elementInternals.form) {
       return;
     }
@@ -492,7 +500,9 @@ export class TextInput extends FASTElement {
    */
   public inputHandler(e: InputEvent): boolean | void {
     this.dirtyValue = true;
-    this.value = this.control.value;
+    this.value = this.control.textContent?.trim() ?? '';
+
+    this.validateInternalInput();
 
     return true;
   }
@@ -511,7 +521,26 @@ export class TextInput extends FASTElement {
   }
 
   /**
+   * Handles the internal control's `paste` event, preventing the default behavior and inserting the clipboard text as plain text.
+   *
+   * @param e - the clipboard event
+   *
+   * @internal
+   */
+  public pasteHandler(e: ClipboardEvent): boolean | void {
+    e.preventDefault();
+    const text = e.clipboardData?.getData('text/plain');
+    if (text) {
+      document.execCommand('insertText', false, text);
+    }
+
+    return true;
+  }
+
+  /**
    * Selects all the text in the text field.
+   *
+   * @param invert - When false, the selection will be cleared.
    *
    * @public
    * @privateRemarks
@@ -519,8 +548,16 @@ export class TextInput extends FASTElement {
    * emitting a `select` event whenever the internal control emits a `select` event
    *
    */
-  public select(): void {
-    this.control.select();
+  public select(invert?: boolean): void {
+    const range = document.createRange();
+    range.selectNodeContents(this.control);
+    const selection = window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+      if (invert !== false) {
+        selection.addRange(range);
+      }
+    }
     this.$emit('select');
   }
 
@@ -543,8 +580,13 @@ export class TextInput extends FASTElement {
    * @internal
    */
   public setValidity(
-    flags: ValidityStateFlags = this.control.validity,
-    message: string = this.control.validationMessage,
+    flags: ValidityStateFlags = {
+      patternMismatch: !!(this.pattern && !new RegExp(this.pattern).test(this._value)),
+      tooLong: this.value?.length > this.maxlength,
+      tooShort: this.value?.length < this.minlength,
+      valueMissing: this.required && !this._value,
+    },
+    message: string = this.validationMessage,
     anchor: HTMLElement = this.control,
   ): void {
     if (this.disabled) {
@@ -552,7 +594,46 @@ export class TextInput extends FASTElement {
       return;
     }
 
-    this.elementInternals.setValidity(flags, message ?? '', anchor);
+    const { validationMessage } = this.validateInternalInput();
+
+    this.elementInternals.setValidity(flags, validationMessage, anchor);
+
+    // this.elementInternals.setValidity(flags, message ?? 'asdf', anchor);
+  }
+
+  /**
+   * Uses a dummy input element to validate the control. This is more reliable than trying to handle things like type validation manually.
+   * It also provides the browser's built-in `validationMessage`.
+   *
+   * @internal
+   */
+  private validateInternalInput(): { validity: ValidityState; validationMessage: string } {
+    this.internalInput = this.internalInput ?? document.createElement('input');
+
+    // mirror all attributes to the internal input
+    [...this.attributes].forEach(attr => {
+      if (attr.name !== 'value') {
+        if (attr.name) {
+          if (attr.name !== 'value' || attr.value !== '') {
+            this.internalInput.setAttribute(attr.name, attr.value ?? attr.name);
+          }
+        }
+      }
+    });
+
+    this.internalInput.value = this.value ?? null;
+
+    this.internalInput.style.display = 'none';
+
+    this.shadowRoot!.append(this.internalInput);
+
+    this.internalInput.checkValidity();
+    // this.internalInput.reportValidity();
+
+    return {
+      validity: this.internalInput.validity,
+      validationMessage: this.internalInput.validationMessage,
+    };
   }
 }
 
