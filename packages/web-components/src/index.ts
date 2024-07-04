@@ -219,6 +219,13 @@ export {
 } from './tabs/index.js';
 export type { TabsOptions } from './tabs/index.js';
 export {
+  TextArea,
+  TextAreaAppearance,
+  TextAreaDefinition,
+  TextAreaStyles,
+  TextAreaTemplate,
+} from './textarea/index.js';
+export {
   TextInput,
   TextInputAppearance,
   TextInputControlSize,
