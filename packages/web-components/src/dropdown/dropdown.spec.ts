@@ -5,7 +5,9 @@ test.describe('Dropdown', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(fixtureURL('components-dropdown--dropdown'));
 
-    await page.waitForFunction(() => customElements.whenDefined('fluent-dropdown'));
+    await page.waitForFunction(() =>
+      Promise.all([customElements.whenDefined('fluent-dropdown'), customElements.whenDefined('fluent-option')]),
+    );
   });
 
   test('should render a dropdown', async ({ page }) => {

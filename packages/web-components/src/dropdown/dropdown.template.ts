@@ -11,7 +11,7 @@ import type { DropdownOptions } from './dropdown.options.js';
  * @public
  */
 export function dropdownTemplate<T extends Dropdown>(options: DropdownOptions = {}): ElementViewTemplate<T> {
-  return html<T>`<template></template>`;
+  return html<T>`<slot></slot>`;
 }
 
 /**
