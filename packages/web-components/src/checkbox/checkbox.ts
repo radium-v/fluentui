@@ -583,6 +583,9 @@ export class Checkbox extends BaseCheckbox {
    * @public
    */
   public toggle(force: boolean = !this.checked): void {
+    if (this.dirtyState) {
+      this.indeterminate = false;
+    }
     super.toggle(force);
   }
 }
