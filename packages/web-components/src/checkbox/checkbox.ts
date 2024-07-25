@@ -322,7 +322,7 @@ export class BaseCheckbox extends FASTElement {
 
     const previousChecked = this.checked;
 
-    this.toggleChecked();
+    this.toggle();
 
     if (previousChecked !== this.checked) {
       this.$emit('change');
@@ -460,7 +460,7 @@ export class BaseCheckbox extends FASTElement {
    * @param force - Forces the element to be checked or unchecked
    * @public
    */
-  public toggleChecked(force: boolean = !this.checked): void {
+  public toggle(force: boolean = !this.checked): void {
     this.checked = force;
   }
 }
@@ -575,8 +575,7 @@ export class Checkbox extends BaseCheckbox {
    * @param force - Forces the element to be checked or unchecked
    * @public
    */
-  public toggleChecked(force: boolean = !this.checked): void {
-    this.indeterminate = false;
-    super.toggleChecked(force);
+  public toggle(force: boolean = !this.checked): void {
+    super.toggle(force);
   }
 }
