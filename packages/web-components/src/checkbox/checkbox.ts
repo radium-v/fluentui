@@ -106,7 +106,7 @@ export class BaseCheckbox extends FASTElement {
    * @internal
    */
   protected initialCheckedChanged(prev: boolean | undefined, next: boolean | undefined): void {
-    if (!this.dirtyChecked) {
+    if (!this.dirtyState) {
       this.checked = !!next;
     }
   }
@@ -178,7 +178,7 @@ export class BaseCheckbox extends FASTElement {
    *
    * @internal
    */
-  private dirtyChecked: boolean = false;
+  protected dirtyState: boolean = false;
 
   /**
    * The associated `<form>` element.
@@ -325,7 +325,7 @@ export class BaseCheckbox extends FASTElement {
       return;
     }
 
-    this.dirtyChecked = true;
+    this.dirtyState = true;
 
     const previousChecked = this.checked;
 
@@ -392,7 +392,7 @@ export class BaseCheckbox extends FASTElement {
    */
   formResetCallback(): void {
     this.checked = this.initialChecked ?? false;
-    this.dirtyChecked = false;
+    this.dirtyState = false;
     this.setValidity();
   }
 
