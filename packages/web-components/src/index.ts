@@ -111,8 +111,8 @@ export {
   DrawerTemplate,
   DrawerType,
 } from './drawer/index.js';
-export { Dropdown, DropdownDefinition, DropdownStyles, DropdownTemplate } from './dropdown/index.js';
-export type { DropdownOptions } from './dropdown/index.js';
+export { BaseDropdown, Dropdown, DropdownDefinition, DropdownStyles, DropdownTemplate } from './dropdown/index.js';
+export type { DropdownAppearance, DropdownOptions, DropdownSize } from './dropdown/index.js';
 export {
   Field,
   FieldDefinition,
