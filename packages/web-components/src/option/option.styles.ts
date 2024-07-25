@@ -1,6 +1,6 @@
 import { css } from '@microsoft/fast-element';
 import { typographyBody1Styles } from '../styles/partials/typography.partials.js';
-import { disabledState, multiple, selectedState } from '../styles/states/index.js';
+import { disabledState, multipleState, selectedState } from '../styles/states/index.js';
 import {
   borderRadiusMedium,
   borderRadiusSmall,
@@ -83,12 +83,12 @@ export const styles = css`
     visibility: visible;
   }
 
-  :host(${multiple}) .checkmark-16-filled,
-  :host(:not(${multiple})) .checkmark-12-regular {
+  :host(${multipleState}) .checkmark-16-filled,
+  :host(:not(${multipleState})) .checkmark-12-regular {
     display: none;
   }
 
-  :host(${multiple}) .checkmark-12-regular {
+  :host(${multipleState}) .checkmark-12-regular {
     fill: transparent;
     background-color: ${colorNeutralBackground1};
     border-radius: ${borderRadiusSmall};
@@ -100,7 +100,7 @@ export const styles = css`
     width: 16px;
   }
 
-  :host(${multiple}${selectedState}) .checkmark-12-regular {
+  :host(${multipleState}${selectedState}) .checkmark-12-regular {
     background-color: ${colorCompoundBrandBackground};
     border-color: ${colorCompoundBrandStroke};
     fill: ${colorNeutralForegroundInverted};
