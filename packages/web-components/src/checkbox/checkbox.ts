@@ -1,6 +1,6 @@
 import { attr, FASTElement, Observable, observable } from '@microsoft/fast-element';
 import { toggleState } from '../utils/element-internals.js';
-import { CheckboxShape, CheckboxSize } from './checkbox.options.js';
+import { CheckboxMode, CheckboxShape, CheckboxSize } from './checkbox.options.js';
 
 /**
  * The base class for a component with a toggleable checked state.
@@ -25,7 +25,7 @@ export class BaseCheckbox extends FASTElement {
    * @public
    */
   public get checked(): boolean {
-    Observable.track(this, 'checked');
+    Observable.track(this, this.mode);
     return !!this._checked;
   }
 
@@ -34,8 +34,8 @@ export class BaseCheckbox extends FASTElement {
     this.setFormValue(next ? this.value : null);
     this.setValidity();
     this.setAriaProperties();
-    toggleState(this.elementInternals, 'checked', next);
-    Observable.notify(this, 'checked');
+    toggleState(this.elementInternals, this.mode, next);
+    Observable.notify(this, this.mode);
   }
 
   /**
@@ -214,6 +214,13 @@ export class BaseCheckbox extends FASTElement {
   public get labels(): ReadonlyArray<HTMLLabelElement> {
     return Object.freeze(Array.from(this.elementInternals.labels) as HTMLLabelElement[]);
   }
+
+  /**
+   * The mode of the checkbox.
+   *
+   * @internal
+   */
+  protected mode: CheckboxMode = CheckboxMode.checked;
 
   /**
    * The fallback validation message, taken from a native checkbox `<input>` element.
