@@ -327,11 +327,11 @@ export class BaseCheckbox extends FASTElement {
 
     this.dirtyState = true;
 
-    const previousChecked = this.checked;
+    const previous = this.checked;
 
     this.toggle();
 
-    if (previousChecked !== this.checked) {
+    if (previous !== this.checked) {
       this.$emit('change');
       this.$emit('input');
     }
