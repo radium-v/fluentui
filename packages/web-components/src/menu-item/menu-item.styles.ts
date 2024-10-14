@@ -23,6 +23,13 @@ import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-s
 import { display } from '../utils/display.js';
 import { state } from '../utils/states.js';
 
+/**
+ * Selector for the `submenu` state.
+ * @deprecated Use the {@link state | `state`} function.
+ * @public
+ */
+export const submenuState = state('submenu');
+
 /** MenuItem styles
  * @public
  */
