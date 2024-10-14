@@ -1,5 +1,4 @@
 import { css } from '@microsoft/fast-element';
-import { display, forcedColorsStylesheetBehavior } from '../utils/index.js';
 import {
   borderRadiusMedium,
   colorCompoundBrandForeground1Pressed,
@@ -20,13 +19,9 @@ import {
   lineHeightBase200,
   lineHeightBase300,
 } from '../theme/design-tokens.js';
-import { checkedState, disabledState } from '../styles/states/index.js';
-
-/**
- * Selector for the `submenu` state.
- * @public
- */
-export const submenuState = css.partial`:is([state--submenu], :state(submenu))`;
+import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-stylesheet-behavior.js';
+import { display } from '../utils/display.js';
+import { state } from '../utils/states.js';
 
 /** MenuItem styles
  * @public
@@ -66,13 +61,13 @@ export const styles = css`
     color: ${colorCompoundBrandForeground1Pressed};
   }
 
-  :host(${disabledState}) {
+  :host(${state('disabled')}) {
     background-color: ${colorNeutralBackgroundDisabled};
     color: ${colorNeutralForegroundDisabled};
   }
 
-  :host(${disabledState}) ::slotted([slot='start']),
-  :host(${disabledState}) ::slotted([slot='end']) {
+  :host(${state('disabled')}) ::slotted([slot='start']),
+  :host(${state('disabled')}) ::slotted([slot='end']) {
     color: ${colorNeutralForegroundDisabled};
   }
 
@@ -88,10 +83,10 @@ export const styles = css`
     padding: 0 2px;
   }
 
-  :host(:not(${checkedState})) .indicator,
-  :host(:not(${checkedState})) ::slotted([slot='indicator']),
-  :host(:not(${submenuState})) .submenu-glyph,
-  :host(:not(${submenuState})) ::slotted([slot='submenu-glyph']) {
+  :host(:not(${state('checked')})) .indicator,
+  :host(:not(${state('checked')})) ::slotted([slot='indicator']),
+  :host(:not(${state('submenu')})) .submenu-glyph,
+  :host(:not(${state('submenu')})) ::slotted([slot='submenu-glyph']) {
     display: none;
   }
 
@@ -110,11 +105,11 @@ export const styles = css`
     grid-template-columns: 20px 20px auto auto;
   }
 
-  :host(${submenuState}) {
+  :host(${state('submenu')}) {
     grid-template-columns: 20px auto auto 20px;
   }
 
-  :host([data-indent='2']${submenuState}) {
+  :host([data-indent='2']${state('submenu')}) {
     grid-template-columns: 20px 20px auto auto 20px;
   }
 
@@ -177,9 +172,9 @@ export const styles = css`
   }
 `.withBehaviors(
   forcedColorsStylesheetBehavior(css`
-    :host(${disabledState}),
-    :host(${disabledState}) ::slotted([slot='start']),
-    :host(${disabledState}) ::slotted([slot='end']) {
+    :host(${state('disabled')}),
+    :host(${state('disabled')}) ::slotted([slot='start']),
+    :host(${state('disabled')}) ::slotted([slot='end']) {
       color: GrayText;
     }
   `),
