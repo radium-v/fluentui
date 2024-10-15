@@ -147,7 +147,7 @@ export const styles = css`
   :host(${state(ValidationFlags.tooShort)}) ::slotted([flag='${ValidationFlags.tooShort}']),
   :host(${state(ValidationFlags.typeMismatch)}) ::slotted([flag='${ValidationFlags.typeMismatch}']),
   :host(${state(ValidationFlags.valueMissing)}) ::slotted([flag='${ValidationFlags.valueMissing}']),
-  :host(${state(ValidationFlags.valid)})::slotted([flag='${ValidationFlags.valid}']) {
+  :host(${state(ValidationFlags.valid)}) ::slotted([flag='${ValidationFlags.valid}']) {
     display: block;
   }
 `;
