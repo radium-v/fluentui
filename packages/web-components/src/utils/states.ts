@@ -45,7 +45,7 @@ export type AvatarStateValue =
   | 'steel'
   | 'teal';
 
-export type stateValue =
+export type StateValue =
   | 'align-end'
   | 'align-start'
   | 'anchor'
@@ -148,7 +148,7 @@ const statesMap = new Map<string, string>();
  *
  * @public
  */
-export function state(state: stateValue): string {
+export function state(state: StateValue): string {
   if (!statesMap.has(state)) {
     if (!CustomStatesSetSupported) {
       statesMap.set(state, `[state--${state}]`);
