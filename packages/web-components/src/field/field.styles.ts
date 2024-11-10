@@ -14,7 +14,7 @@ import {
   typeMismatchState,
   validState,
   valueMissingState,
-} from '../styles/states/index.js';
+} from '../styles/states.js';
 import {
   borderRadiusMedium,
   colorNeutralForeground1,
@@ -29,7 +29,6 @@ import {
   lineHeightBase300,
   lineHeightBase400,
   spacingHorizontalM,
-  spacingHorizontalS,
   spacingVerticalM,
   spacingVerticalS,
   spacingVerticalXXS,
