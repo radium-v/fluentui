@@ -1,5 +1,5 @@
 import { css } from '@microsoft/fast-element';
-import { display, forcedColorsStylesheetBehavior } from '../utils/index.js';
+import { errorState, largeState, squareState, successState, warningState } from '../styles/states/index.js';
 import {
   borderRadiusMedium,
   borderRadiusNone,
@@ -10,7 +10,8 @@ import {
   colorPaletteRedBackground3,
   colorTransparentBackground,
 } from '../theme/design-tokens.js';
-import { errorState, largeState, squareState, successState, warningState } from '../styles/states/index.js';
+import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-stylesheet-behavior.js';
+import { display } from '../utils/display.js';
 
 /** ProgressBar styles
  * @public

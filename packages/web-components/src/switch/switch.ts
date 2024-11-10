@@ -1,4 +1,4 @@
-import type { StaticallyComposableHTML } from '../utils/index.js';
+import type { StaticallyComposableHTML } from '../utils/template-helpers.js';
 import { BaseCheckbox } from '../checkbox/checkbox.js';
 
 export type SwitchOptions = {

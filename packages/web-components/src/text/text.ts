@@ -1,5 +1,5 @@
 import { attr, FASTElement, Observable } from '@microsoft/fast-element';
-import { hasMatchingState, swapStates, toggleState } from '../utils/element-internals.js';
+import { swapStates, toggleState } from '../utils/element-internals.js';
 import { TextAlign, TextFont, TextSize, TextWeight } from './text.options.js';
 
 /**

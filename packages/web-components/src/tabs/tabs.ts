@@ -11,7 +11,7 @@ import {
 } from '@microsoft/fast-web-utilities';
 import type { Tab } from '../tab/tab.js';
 import { applyMixins } from '../utils/apply-mixins.js';
-import { StartEnd } from '../patterns/index.js';
+import { StartEnd } from '../patterns/start-end.js';
 import { TabsAppearance, TabsOrientation, type TabsSize } from './tabs.options.js';
 
 type TabData = Omit<DOMRect, 'top' | 'bottom' | 'left' | 'right' | 'toJSON'>;

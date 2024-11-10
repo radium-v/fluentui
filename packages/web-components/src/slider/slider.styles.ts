@@ -1,6 +1,5 @@
 import { css } from '@microsoft/fast-element';
 import { smallState, verticalState } from '../styles/states/index.js';
-import { display, forcedColorsStylesheetBehavior } from '../utils/index.js';
 import {
   borderRadiusCircular,
   borderRadiusMedium,
@@ -16,6 +15,8 @@ import {
   colorStrokeFocus1,
   colorStrokeFocus2,
 } from '../theme/design-tokens.js';
+import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-stylesheet-behavior.js';
+import { display } from '../utils/display.js';
 
 /** Text styles
  * @public

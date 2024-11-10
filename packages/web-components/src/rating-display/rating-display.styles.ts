@@ -1,5 +1,5 @@
 import { css } from '@microsoft/fast-element';
-import { display, forcedColorsStylesheetBehavior } from '../utils/index.js';
+import { brandState, largeState, neutralState, smallState } from '../styles/states/index.js';
 import {
   colorBrandBackground,
   colorBrandStroke2,
@@ -17,7 +17,8 @@ import {
   spacingHorizontalXS,
   spacingHorizontalXXS,
 } from '../theme/design-tokens.js';
-import { brandState, largeState, neutralState, smallState } from '../styles/states/index.js';
+import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-stylesheet-behavior.js';
+import { display } from '../utils/display.js';
 
 /**
  * The styles for the Rating Display component.

@@ -1,5 +1,4 @@
 import { css } from '@microsoft/fast-element';
-import { display, forcedColorsStylesheetBehavior } from '../utils/index.js';
 import {
   borderRadiusCircular,
   borderRadiusMedium,
@@ -18,6 +17,8 @@ import {
   spacingHorizontalM,
   spacingHorizontalMNudge,
 } from '../theme/design-tokens.js';
+import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-stylesheet-behavior.js';
+import { display } from '../utils/display.js';
 
 export const styles = css`
   ${display('inline-flex')}

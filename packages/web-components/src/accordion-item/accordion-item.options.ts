@@ -1,4 +1,4 @@
-import type { ValuesOf } from '../utils/index.js';
+import type { ValuesOf } from '../utils/typings.js';
 
 /**
  * An Accordion Item header font size can be small, medium, large, and extra-large

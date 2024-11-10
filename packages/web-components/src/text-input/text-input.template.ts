@@ -1,7 +1,7 @@
 import type { ElementViewTemplate } from '@microsoft/fast-element';
 import { html, ref, slotted } from '@microsoft/fast-element';
-import { endSlotTemplate, startSlotTemplate } from '../patterns/index.js';
-import { whitespaceFilter } from '../utils/index.js';
+import { endSlotTemplate, startSlotTemplate } from '../patterns/start-end.js';
+import { whitespaceFilter } from '../utils/whitespace-filter.js';
 import type { TextInput } from './text-input.js';
 import type { TextInputOptions } from './text-input.options.js';
 

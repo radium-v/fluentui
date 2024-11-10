@@ -7,7 +7,7 @@ import {
   colorNeutralForegroundDisabled,
   spacingVerticalL,
 } from '../theme/design-tokens.js';
-import { display } from '../utils/index.js';
+import { display } from '../utils/display.js';
 
 /** RadioGroup styles
  * @public

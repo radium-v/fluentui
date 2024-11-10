@@ -1,7 +1,6 @@
 import { attr, FASTElement, Observable } from '@microsoft/fast-element';
 import { keyEnter } from '@microsoft/fast-web-utilities';
-import type { StartEndOptions } from '../patterns/index.js';
-import { StartEnd } from '../patterns/index.js';
+import { StartEnd, type StartEndOptions } from '../patterns/start-end.js';
 import { applyMixins } from '../utils/apply-mixins.js';
 import { swapStates, toggleState } from '../utils/element-internals.js';
 import {

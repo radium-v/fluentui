@@ -1,5 +1,5 @@
 import { css } from '@microsoft/fast-element';
-import { forcedColorsStylesheetBehavior } from '../utils/index.js';
+import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-stylesheet-behavior.js';
 import {
   badgeBaseStyles,
   badgeFilledStyles,
@@ -7,7 +7,7 @@ import {
   badgeOutlineStyles,
   badgeSizeStyles,
   badgeTintStyles,
-} from '../styles/index.js';
+} from '../styles/partials/badge.partials.js';
 import { borderRadiusMedium, borderRadiusNone, borderRadiusSmall } from '../theme/design-tokens.js';
 import { extraSmallState, roundedState, smallState, squareState, tinyState } from '../styles/states/index.js';
 // why is the border not showing up?

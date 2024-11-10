@@ -1,6 +1,6 @@
 import { css } from '@microsoft/fast-element';
 import { baseButtonStyles } from '../button/button.styles.js';
-import { forcedColorsStylesheetBehavior } from '../utils/index.js';
+import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-stylesheet-behavior.js';
 
 // Need to support icon hover styles
 export const styles = css`

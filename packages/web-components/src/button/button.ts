@@ -1,6 +1,6 @@
 import { attr, FASTElement, nullableNumberConverter, observable } from '@microsoft/fast-element';
 import { keyEnter, keySpace } from '@microsoft/fast-web-utilities';
-import { StartEnd } from '../patterns/index.js';
+import { StartEnd } from '../patterns/start-end.js';
 import { applyMixins } from '../utils/apply-mixins.js';
 import { swapStates, toggleState } from '../utils/element-internals.js';
 import { ButtonAppearance, ButtonFormTarget, ButtonShape, ButtonSize, ButtonType } from './button.options.js';

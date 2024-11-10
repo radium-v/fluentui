@@ -1,5 +1,5 @@
 import { type ElementViewTemplate, html, ref, slotted } from '@microsoft/fast-element';
-import { whitespaceFilter } from '../utils/index.js';
+import { whitespaceFilter } from '../utils/whitespace-filter.js';
 import type { TextArea } from './textarea.js';
 
 /**

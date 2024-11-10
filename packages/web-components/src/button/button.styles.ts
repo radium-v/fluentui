@@ -1,5 +1,15 @@
 import { css } from '@microsoft/fast-element';
-import { display, forcedColorsStylesheetBehavior } from '../utils/index.js';
+import {
+  circularState,
+  iconOnlyState,
+  largeState,
+  outlineState,
+  primaryState,
+  smallState,
+  squareState,
+  subtleState,
+  transparentState,
+} from '../styles/states/index.js';
 import {
   borderRadiusCircular,
   borderRadiusLarge,
@@ -56,17 +66,8 @@ import {
   strokeWidthThick,
   strokeWidthThin,
 } from '../theme/design-tokens.js';
-import {
-  circularState,
-  iconOnlyState,
-  largeState,
-  outlineState,
-  primaryState,
-  smallState,
-  squareState,
-  subtleState,
-  transparentState,
-} from '../styles/states/index.js';
+import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-stylesheet-behavior.js';
+import { display } from '../utils/display.js';
 
 /**
  * @internal

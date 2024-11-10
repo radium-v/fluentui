@@ -1,5 +1,5 @@
 import { type ElementViewTemplate, html, slotted } from '@microsoft/fast-element';
-import { endSlotTemplate, startSlotTemplate } from '../patterns/index.js';
+import { endSlotTemplate, startSlotTemplate } from '../patterns/start-end.js';
 import type { Button } from './button.js';
 import type { ButtonOptions } from './button.options.js';
 

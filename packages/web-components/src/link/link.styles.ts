@@ -1,5 +1,5 @@
 import { css } from '@microsoft/fast-element';
-import { display, forcedColorsStylesheetBehavior } from '../utils/index.js';
+import { inlineState, subtleState } from '../styles/states/index.js';
 import {
   colorBrandForegroundLink,
   colorBrandForegroundLinkHover,
@@ -12,7 +12,8 @@ import {
   fontWeightRegular,
   strokeWidthThin,
 } from '../theme/design-tokens.js';
-import { inlineState, subtleState } from '../styles/states/index.js';
+import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-stylesheet-behavior.js';
+import { display } from '../utils/display.js';
 
 export const styles = css`
   ${display('inline')}

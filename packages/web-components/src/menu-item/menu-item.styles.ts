@@ -1,5 +1,5 @@
 import { css } from '@microsoft/fast-element';
-import { display, forcedColorsStylesheetBehavior } from '../utils/index.js';
+import { checkedState, disabledState, submenuState } from '../styles/states/index.js';
 import {
   borderRadiusMedium,
   colorCompoundBrandForeground1Pressed,
@@ -20,7 +20,8 @@ import {
   lineHeightBase200,
   lineHeightBase300,
 } from '../theme/design-tokens.js';
-import { checkedState, disabledState, submenuState } from '../styles/states/index.js';
+import { forcedColorsStylesheetBehavior } from '../utils/behaviors/match-media-stylesheet-behavior.js';
+import { display } from '../utils/display.js';
 
 /** MenuItem styles
  * @public

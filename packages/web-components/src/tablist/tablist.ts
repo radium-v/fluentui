@@ -9,10 +9,10 @@ import {
   uniqueId,
   wrapInBounds,
 } from '@microsoft/fast-web-utilities';
-import { getDirection } from '../utils/index.js';
+import type { Tab } from '../tab/tab.js';
+import { getDirection } from '../utils/direction.js';
 import { swapStates, toggleState } from '../utils/element-internals.js';
 import { isFocusableElement } from '../utils/focusable-element.js';
-import type { Tab } from '../tab/tab.js';
 import { TablistAppearance, TablistOrientation, TablistSize } from './tablist.options.js';
 
 type TabData = Omit<DOMRect, 'top' | 'bottom' | 'left' | 'right' | 'toJSON'>;
