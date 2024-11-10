@@ -55,7 +55,7 @@ import {
   outlineState,
   smallState,
   underlineState,
-} from '../styles/states/index.js';
+} from '../styles/states.js';
 
 /**
  * Styles for the TextInput component.

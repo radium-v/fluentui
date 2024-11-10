@@ -8,7 +8,7 @@ import {
   extraLargeState,
   largeState,
   smallState,
-} from '../styles/states/index.js';
+} from '../styles/states.js';
 import {
   borderRadiusMedium,
   borderRadiusSmall,

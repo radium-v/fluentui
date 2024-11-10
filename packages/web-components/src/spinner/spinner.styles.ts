@@ -18,7 +18,7 @@ import {
   largeState,
   smallState,
   tinyState,
-} from '../styles/states/index.js';
+} from '../styles/states.js';
 
 export const styles = css`
   ${display('inline-flex')}

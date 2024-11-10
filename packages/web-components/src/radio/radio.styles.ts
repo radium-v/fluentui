@@ -1,5 +1,5 @@
 import { css } from '@microsoft/fast-element';
-import { checkedState, disabledState } from '../styles/states/index.js';
+import { checkedState, disabledState } from '../styles/states.js';
 import {
   borderRadiusCircular,
   borderRadiusMedium,

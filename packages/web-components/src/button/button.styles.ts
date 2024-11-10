@@ -9,7 +9,7 @@ import {
   squareState,
   subtleState,
   transparentState,
-} from '../styles/states/index.js';
+} from '../styles/states.js';
 import {
   borderRadiusCircular,
   borderRadiusLarge,

@@ -66,7 +66,7 @@ import {
   tintState,
   tinyState,
   warningState,
-} from '../states/index.js';
+} from '../states.js';
 
 export const badgeBaseStyles = css.partial`
   ${display('inline-flex')} :host {

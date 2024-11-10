@@ -9,7 +9,7 @@ import {
   badgeTintStyles,
 } from '../styles/partials/badge.partials.js';
 import { borderRadiusMedium, borderRadiusNone, borderRadiusSmall } from '../theme/design-tokens.js';
-import { extraSmallState, roundedState, smallState, squareState, tinyState } from '../styles/states/index.js';
+import { extraSmallState, roundedState, smallState, squareState, tinyState } from '../styles/states.js';
 // why is the border not showing up?
 /** Badge styles
  * @public

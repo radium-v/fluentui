@@ -1,4 +1,4 @@
-import { stateSelector } from '../../utils/element-internals.js';
+import { stateSelector } from '../utils/element-internals.js';
 
 /**
  * Selector for the `align-end` state.

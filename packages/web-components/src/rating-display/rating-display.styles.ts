@@ -1,5 +1,5 @@
 import { css } from '@microsoft/fast-element';
-import { brandState, largeState, neutralState, smallState } from '../styles/states/index.js';
+import { brandState, largeState, neutralState, smallState } from '../styles/states.js';
 import {
   colorBrandBackground,
   colorBrandStroke2,

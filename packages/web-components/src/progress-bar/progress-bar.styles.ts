@@ -1,5 +1,5 @@
 import { css } from '@microsoft/fast-element';
-import { errorState, largeState, squareState, successState, warningState } from '../styles/states/index.js';
+import { errorState, largeState, squareState, successState, warningState } from '../styles/states.js';
 import {
   borderRadiusMedium,
   borderRadiusNone,

@@ -53,7 +53,7 @@ import {
   strikethroughState,
   truncateState,
   underlineState,
-} from '../styles/states/index.js';
+} from '../styles/states.js';
 
 /** Text styles
  * @public

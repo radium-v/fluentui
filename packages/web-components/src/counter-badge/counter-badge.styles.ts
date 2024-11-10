@@ -5,7 +5,7 @@ import {
   badgeGhostStyles,
   badgeSizeStyles,
 } from '../styles/partials/badge.partials.js';
-import { dotState, extraSmallState, roundedState, smallState, tinyState } from '../styles/states/index.js';
+import { dotState, extraSmallState, roundedState, smallState, tinyState } from '../styles/states.js';
 import { borderRadiusMedium, borderRadiusSmall } from '../theme/design-tokens.js';
 
 /** Badge styles

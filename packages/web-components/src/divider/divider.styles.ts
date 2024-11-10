@@ -23,7 +23,7 @@ import {
   strongState,
   subtleState,
   verticalState,
-} from '../styles/states/index.js';
+} from '../styles/states.js';
 
 /** Divider styles
  * @public

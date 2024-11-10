@@ -15,7 +15,7 @@ import {
   lineHeightBase400,
   spacingHorizontalXS,
 } from '../theme/design-tokens.js';
-import { disabledState, largeState, semiboldState, smallState } from '../styles/states/index.js';
+import { disabledState, largeState, semiboldState, smallState } from '../styles/states.js';
 
 /** Label styles
  * @public

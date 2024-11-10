@@ -16,7 +16,7 @@ import {
   fitNoneState,
   roundedState,
   shadowState,
-} from '../styles/states/index.js';
+} from '../styles/states.js';
 
 /** Image styles
  *

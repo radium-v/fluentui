@@ -1,5 +1,5 @@
 import { css } from '@microsoft/fast-element';
-import { checkedState } from '../styles/states/index.js';
+import { checkedState } from '../styles/states.js';
 import {
   borderRadiusCircular,
   colorCompoundBrandBackground,

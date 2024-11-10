@@ -20,7 +20,7 @@ import {
   spacingVerticalS,
 } from '../theme/design-tokens.js';
 
-import { errorState, multiLineState, squareState, successState, warningState } from '../styles/states/index.js';
+import { errorState, multiLineState, squareState, successState, warningState } from '../styles/states.js';
 
 /**
  * Styles for the MessageBar component.

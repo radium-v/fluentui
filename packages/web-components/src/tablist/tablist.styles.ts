@@ -24,7 +24,7 @@ import {
   spacingVerticalXXS,
   strokeWidthThicker,
 } from '../theme/design-tokens.js';
-import { disabledState, largeState, smallState, subtleState, verticalState } from '../styles/states/index.js';
+import { disabledState, largeState, smallState, subtleState, verticalState } from '../styles/states.js';
 /**
  * @public
  */

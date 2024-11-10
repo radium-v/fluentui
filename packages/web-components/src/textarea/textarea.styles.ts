@@ -56,7 +56,7 @@ import {
   resizeVerticalState,
   smallState,
   userInvalidState,
-} from '../styles/states/index.js';
+} from '../styles/states.js';
 
 /**
  * Styles for the TextArea component.

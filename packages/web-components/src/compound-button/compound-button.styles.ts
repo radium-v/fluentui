@@ -25,7 +25,7 @@ import {
   smallState,
   subtleState,
   transparentState,
-} from '../styles/states/index.js';
+} from '../styles/states.js';
 
 // Need to support icon hover styles
 export const styles = css`

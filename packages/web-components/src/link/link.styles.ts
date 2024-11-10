@@ -1,5 +1,5 @@
 import { css } from '@microsoft/fast-element';
-import { inlineState, subtleState } from '../styles/states/index.js';
+import { inlineState, subtleState } from '../styles/states.js';
 import {
   colorBrandForegroundLink,
   colorBrandForegroundLinkHover,
