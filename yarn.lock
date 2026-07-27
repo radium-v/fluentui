@@ -2937,7 +2937,7 @@ __metadata:
     file-loader: "npm:6.2.0"
     find-free-port: "npm:2.0.0"
     flamegrill: "npm:0.2.0"
-    fork-ts-checker-webpack-plugin: "npm:9.0.2"
+    fork-ts-checker-webpack-plugin: "npm:9.1.0"
     fs-extra: "npm:8.1.0"
     glob: "npm:7.2.0"
     globals: "npm:13.24.0"
@@ -18737,13 +18737,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fork-ts-checker-webpack-plugin@npm:9.0.2":
-  version: 9.0.2
-  resolution: "fork-ts-checker-webpack-plugin@npm:9.0.2"
+"fork-ts-checker-webpack-plugin@npm:9.1.0":
+  version: 9.1.0
+  resolution: "fork-ts-checker-webpack-plugin@npm:9.1.0"
   dependencies:
     "@babel/code-frame": "npm:^7.16.7"
     chalk: "npm:^4.1.2"
-    chokidar: "npm:^3.5.3"
+    chokidar: "npm:^4.0.1"
     cosmiconfig: "npm:^8.2.0"
     deepmerge: "npm:^4.2.2"
     fs-extra: "npm:^10.0.0"
@@ -18756,7 +18756,7 @@ __metadata:
   peerDependencies:
     typescript: ">3.6.0"
     webpack: ^5.11.0
-  checksum: 10c0/37e11dadcc65d297f07882f1661795289f2bf16fa9dea0b90bcc438855d48787378bce4dfcd8e842782f220503438995efbb28cbe560126f6a744ff740e8cc38
+  checksum: 10c0/b4acdf400862af5f57d3e159b3a444e7f9f73e9f4609d54604c3810f75f8adcea0165a8b17ee856ed3c65591d058ffd73cd08d273e289d4952844e75f6efa85d
   languageName: node
   linkType: hard
 
